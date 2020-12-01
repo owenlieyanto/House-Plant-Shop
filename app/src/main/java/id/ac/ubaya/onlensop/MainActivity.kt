@@ -46,4 +46,4 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-// coba push dr andstud
+// bajdsnfkjansdfkjnaskldjnknanfsdan
