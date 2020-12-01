@@ -47,3 +47,5 @@ class MainActivity : AppCompatActivity() {
 }
 
 // tes doank
+
+//tes kembali dari jericho
