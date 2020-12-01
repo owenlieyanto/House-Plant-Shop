@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_main.*
 
-// tes lagi Owen.
-// another edit.
-
 class MainActivity : AppCompatActivity() {
     val fragments: ArrayList<Fragment> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,4 +46,4 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-//Tes dari Elisa
+// coba push dr andstud
