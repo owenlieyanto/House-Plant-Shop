@@ -46,4 +46,4 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-// bajdsnfkjansdfkjnaskldjnknanfsdan
+// lorem ipsum dolor sir amet
