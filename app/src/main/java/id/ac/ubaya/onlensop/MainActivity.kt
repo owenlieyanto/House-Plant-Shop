@@ -46,5 +46,4 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-// coba push dr andstud
-// coba push dr andstud 2
+// lorem ipsum dolor sir amet
