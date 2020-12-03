@@ -10,7 +10,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:fontFamily="@font/asap_bold"
+        android:text="REGISTER"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +35,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputRegisterEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/asap" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -55,7 +57,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputRegisterNama"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/asap" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -76,6 +79,7 @@
             android:id="@+id/textInputRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/asap"
             android:inputType="textPassword"
             android:password="false" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -98,6 +102,7 @@
             android:id="@+id/textInputRegisterRetypePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/asap"
             android:inputType="textPassword"
             android:password="false" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -108,6 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/asap_medium"
         android:text="Sign Up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
