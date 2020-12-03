@@ -10,8 +10,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/asap_bold"
-        android:text="REGISTER"
+        android:text="Register"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/asap" />
+            android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,6 +58,7 @@
             android:id="@+id/textInputRegisterNama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="1"
             android:fontFamily="@font/asap" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,9 +80,9 @@
             android:id="@+id/textInputRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/asap"
             android:inputType="textPassword"
-            android:password="false" />
+            android:password="false"
+            android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -104,7 +105,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/asap"
             android:inputType="textPassword"
-            android:password="false" />
+            android:password="false"
+            android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
