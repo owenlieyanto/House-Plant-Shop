@@ -34,7 +34,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputRegisterEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -55,7 +56,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputRegisterNama"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -77,7 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:password="false" />
+            android:password="false"
+            android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -99,7 +102,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:password="false" />
+            android:password="false"
+            android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
