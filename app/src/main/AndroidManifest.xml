@@ -3,7 +3,6 @@
     package="id.ac.ubaya.onlensop">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
