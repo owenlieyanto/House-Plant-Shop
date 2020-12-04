@@ -13,28 +13,34 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_card_layout.view.*
 
 
-class ProductAdapter (val products: ArrayList<Product>):
-    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
-    class ProductViewHolder(val v: View) : RecyclerView.ViewHolder(v)
+class ProductAdapter (val products: ArrayList<Product>): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
+    class ProductViewHolder(val view: View) : RecyclerView.ViewHolder(view){
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        var v = inflater.inflate(R.layout.product_card_layout, parent, false)
-        v.textNamaProduk.setText("Haha")
-        return ProductViewHolder(v)
+        var view = inflater.inflate(R.layout.product_card_layout, parent, false)
+        //view.textNamaProduk.setText("Haha")
+        return ProductViewHolder(view)
 
     }
-    override fun getItemCount(): Int {
-        return products.size
+
+
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+        val products = products[position]
+
+        with(holder.view){
+            Picasso.get().load(products.image).into(imageProduk)
+            textHarga.text = products.price.toString()
+            textNamaProduk.text = products.name
+            textDescProd.text = products.desc
+        }
+
+        val img= "http://ubaya.prototipe.net/nmp160418081/image/" + products.image
+        Picasso.get().load(img).into(holder.view.imageProduk)
+
     }
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int)
-    {
-//        val img= "image/" + products[position].image
-        val img= "http://ubaya.prototipe.net/nmp160418081/image/1.jpg"
-        Picasso.get().load(img).into(holder.v.imageProduk)
-//        holder.v.textNamaProduk.text = products[position].name
-        holder.v.textNamaProduk.text = "HIHIHIHIHI"
-        Log.d("masuk onbind", "pipi")
-    }
+    override fun getItemCount()= products.size
 }
