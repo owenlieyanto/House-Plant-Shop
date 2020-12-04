@@ -35,8 +35,8 @@ class ProductAdapter(val products: ArrayList<Product>) :
         with(holder.view) {
             Picasso.get().load(products.image).into(imageProduk)
             textHarga.text = products.price.toString()
-            textNamaProduk.text = products.name.take(30) + "..."
-            textDescProd.text = products.desc.take(100) + "..."
+            textNamaProduk.text = products.name.take(30) + "…"
+            textDescProd.text = products.desc.take(100) + "…"
 
             cardViewProduct.setOnClickListener {
                 val intent = Intent(context, ProductDetailActivity::class.java)

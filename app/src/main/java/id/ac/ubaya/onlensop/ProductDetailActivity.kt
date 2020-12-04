@@ -35,10 +35,11 @@ class ProductDetailActivity : AppCompatActivity() {
                 val price = data.getJSONObject(0).getInt("price")
                 val image = data.getJSONObject(0).getString("image")
                 val stock = data.getJSONObject(0).getInt("stock")
-                val categories_id = data.getJSONObject(0).getInt("categories_id")
+                val category_name = data.getJSONObject(0).getString("category_name")
 
-                val product = Product(id, name, description, price, image, stock, categories_id)
+                val product = Product(id, name, description, price, image, stock, category_name)
 
+                textViewCategory.text = product.category
                 textHargaDetail.text = product.price.toString()
                 textNamaDetail.text = product.name
                 textDescDetail.text = product.desc

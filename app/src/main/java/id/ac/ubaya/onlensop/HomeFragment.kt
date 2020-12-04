@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
                                     getInt("price"),
                                     getString("image"),
                                     getInt("stock"),
-                                    getInt("categories_id")
+                                    getString("category_name")
                                 )
                             )
                         }
