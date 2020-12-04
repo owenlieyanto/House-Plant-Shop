@@ -37,13 +37,15 @@
 
             <TextView
                 android:id="@+id/textNamaProduk"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/asap_bold"
                 android:text="Cactus Ariocarpus"
                 android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageProduk"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,26 +64,30 @@
 
             <TextView
                 android:id="@+id/textHarga"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/asap_medium"
                 android:text="xxx"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/button"
                 app:layout_constraintStart_toEndOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/textDescProd" />
 
             <TextView
                 android:id="@+id/textDescProd"
-                android:layout_width="143dp"
+                android:layout_width="0dp"
                 android:layout_height="51dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/asap"
                 android:text="Small genus of succulent, subtropical plants of the family Cactaceae"
                 android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageProduk"
                 app:layout_constraintTop_toBottomOf="@+id/textNamaProduk" />
 
