@@ -73,7 +73,7 @@
                 android:text="xxx"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/button"
+                app:layout_constraintEnd_toStartOf="@+id/buttonAddToCart"
                 app:layout_constraintStart_toEndOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/textDescProd" />
 
@@ -92,7 +92,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textNamaProduk" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buttonAddToCart"
                 android:layout_width="41dp"
                 android:layout_height="29dp"
                 android:insetTop="0dp"

@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
         val stringRequest = StringRequest(
             Request.Method.POST,
             url,
-            Response.Listener {
+            {
                 Log.d("cekapihome", it)
 
                 val obj = JSONObject(it)
@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
                     Log.d("cekisiarray", products.toString())
                 }
             },
-            Response.ErrorListener {
+            {
                 Log.e("apiresult", it.toString())
             }
         )
