@@ -1,5 +1,6 @@
 package id.ac.ubaya.onlensop
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -27,14 +28,15 @@ class ProductAdapter(val products: ArrayList<Product>) :
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val products = products[position]
 
         with(holder.view) {
             Picasso.get().load(products.image).into(imageProduk)
             textHarga.text = products.price.toString()
-            textNamaProduk.text = products.name
-            textDescProd.text = products.desc
+            textNamaProduk.text = products.name.take(30) + "..."
+            textDescProd.text = products.desc.take(100) + "..."
 
             cardViewProduct.setOnClickListener {
                 val intent = Intent(context, ProductDetailActivity::class.java)
