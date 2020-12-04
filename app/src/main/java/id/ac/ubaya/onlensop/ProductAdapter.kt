@@ -1,18 +1,11 @@
 package id.ac.ubaya.onlensop
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_card_layout.view.*
 
@@ -21,7 +14,7 @@ class ProductAdapter(val products: ArrayList<Product>) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     companion object {
-        val PRODUCT = "produk"
+        val PRODUCT_ID = "produk"
     }
 
     class ProductViewHolder(val view: View) : RecyclerView.ViewHolder(view)
@@ -45,7 +38,7 @@ class ProductAdapter(val products: ArrayList<Product>) :
 
             cardViewProduct.setOnClickListener {
                 val intent = Intent(context, ProductDetailActivity::class.java)
-                intent.putExtra(PRODUCT, products)
+                intent.putExtra(PRODUCT_ID, products.id)
                 context.startActivity(intent)
             }
 
