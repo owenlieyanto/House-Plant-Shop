@@ -62,6 +62,7 @@ class CartFragment : Fragment() {
                         with(playObj) {
                             carts.add(
                                 Cart(
+                                    getInt("product_id"),
                                     getString("name"),
                                     getInt("price"),
                                     getString("image"),

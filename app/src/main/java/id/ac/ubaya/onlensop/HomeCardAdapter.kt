@@ -80,9 +80,6 @@ class HomeCardAdapter(val products: ArrayList<Product>) :
                     }
                 )
                 q.add(stringRequest)
-
-                // TODO: refresh CartFragment (update)
-
             }
         }
 

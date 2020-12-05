@@ -3,6 +3,7 @@ package id.ac.ubaya.onlensop
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -13,6 +14,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class ProductDetailActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
@@ -23,7 +25,6 @@ class ProductDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         collapsingToolbar.title = ""
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -59,7 +60,6 @@ class ProductDetailActivity : AppCompatActivity() {
                 val df = DecimalFormat("#,###")
                 df.roundingMode = RoundingMode.CEILING
 
-
                 textViewCategory.text = product.category
                 textHargaDetail.text = df.format(product.price).toString()
                 textNamaDetail.text = product.name
@@ -74,6 +74,31 @@ class ProductDetailActivity : AppCompatActivity() {
         )
         q.add(stringRequest)
 
+        buttonAddToCartDetail.setOnClickListener {
+            val q2 = Volley.newRequestQueue(this)
+            val url2 =
+                "http://ubaya.prototipe.net/nmp160418081/updateCart.php?" +
+                        "customers_id=${Global.customer.id}&" +
+                        "products_id=${product_id}&" +
+                        "quantity=1"
+            val stringRequest2 = StringRequest(
+                Request.Method.GET,
+                url2,
+                {
+                    Log.d("apiresult", it)
 
+                    val obj = JSONObject(it)
+                    if (obj.getString("result") == "OK") {
+                        val message = obj.getString("message")
+
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    }
+                },
+                {
+                    Log.e("apiresult", it.toString())
+                }
+            )
+            q2.add(stringRequest2)
+        }
     }
 }
