@@ -17,6 +17,23 @@ class ProductDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
 
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        collapsingToolbar.title = ""
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         val product_id = intent.getIntExtra(ProductAdapter.PRODUCT_ID, 0)
 
         val q = Volley.newRequestQueue(this)
@@ -52,5 +69,7 @@ class ProductDetailActivity : AppCompatActivity() {
             }
         )
         q.add(stringRequest)
+
+
     }
 }
