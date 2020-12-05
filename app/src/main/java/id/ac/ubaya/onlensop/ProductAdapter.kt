@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_card_layout.view.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 
 class ProductAdapter(val products: ArrayList<Product>) :
@@ -30,11 +33,15 @@ class ProductAdapter(val products: ArrayList<Product>) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+
+        val df = DecimalFormat("#,###")
+        df.roundingMode = RoundingMode.CEILING
+
         val products = products[position]
 
         with(holder.view) {
             Picasso.get().load(products.image).into(imageProduk)
-            textHarga.text = products.price.toString()
+            textHarga.text = df.format(products.price).toString()
             textNamaProduk.text = products.name.take(30) + "…"
             textDescProd.text = products.desc.take(100) + "…"
 

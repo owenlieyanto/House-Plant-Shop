@@ -11,6 +11,9 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import org.json.JSONObject
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 class ProductDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +59,12 @@ class ProductDetailActivity : AppCompatActivity() {
 
                 val product = Product(id, name, description, price, image, stock, category_name)
 
+                val df = DecimalFormat("#,###")
+                df.roundingMode = RoundingMode.CEILING
+
+
                 textViewCategory.text = product.category
-                textHargaDetail.text = product.price.toString()
+                textHargaDetail.text = df.format(product.price).toString()
                 textNamaDetail.text = product.name
                 textDescDetail.text = product.desc
 
