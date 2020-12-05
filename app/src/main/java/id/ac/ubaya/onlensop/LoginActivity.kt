@@ -20,8 +20,6 @@ import org.json.JSONObject
 @Suppress("NAME_SHADOWING")
 class LoginActivity : AppCompatActivity() {
 
-    val CUSTOMER = "customer"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -42,20 +40,20 @@ class LoginActivity : AppCompatActivity() {
                         if (obj.getString("result") == "OK") {
                             val data = obj.getJSONArray("data")
 
+                            val id = data.getJSONObject(0).getInt("id")
                             val email = data.getJSONObject(0).getString("email")
                             val nama = data.getJSONObject(0).getString("nama")
                             val password = data.getJSONObject(0).getString("password")
                             val wallet = data.getJSONObject(0).getString("wallet")
 
-                            val customer = Customer(email, nama, password, wallet.toInt())
+                            val customer = Customer(id, email, nama, password, wallet.toInt())
 
                             val intent = Intent(this, MainActivity::class.java)
-                            intent.putExtra(CUSTOMER, customer)
+                            Global.customer = customer
                             startActivity(intent)
                             finish()
                         } else {
                             val pesan = obj.getString("message")
-//                        Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show()
                             Snackbar.make(
                                 contraintLayoutLogin,
                                 pesan,

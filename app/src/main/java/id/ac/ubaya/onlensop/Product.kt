@@ -9,5 +9,5 @@ data class Product(
     var price: Int,
     var image: String,
     var stock: Int,
-    var category: String
-): Serializable
+    var category: String,
+) : Serializable

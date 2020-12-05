@@ -6,14 +6,11 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.text.NumberFormat
 
 class ProductDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +34,7 @@ class ProductDetailActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val product_id = intent.getIntExtra(ProductAdapter.PRODUCT_ID, 0)
+        val product_id = intent.getIntExtra(ProductCardAdapter.PRODUCT_ID, 0)
 
         val q = Volley.newRequestQueue(this)
         val url = "http://ubaya.prototipe.net/nmp160418081/detailproduct.php?id=$product_id"

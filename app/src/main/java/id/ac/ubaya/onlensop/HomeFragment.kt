@@ -9,17 +9,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 //import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.product_card_layout.view.*
 import org.json.JSONObject
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARR_PRODUCTS = "arrayproducts"
 
 /**
  * A simple [Fragment] subclass.
@@ -27,7 +20,6 @@ private const val ARR_PRODUCTS = "arrayproducts"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
 
     var products: ArrayList<Product> = ArrayList()
     var v: View? = null
@@ -49,7 +41,7 @@ class HomeFragment : Fragment() {
                     for (i in 0 until data.length()) {
                         val playObj = data.getJSONObject(i)
 
-                        with(playObj){
+                        with(playObj) {
                             products.add(
                                 Product(
                                     getInt("id"),
@@ -90,28 +82,20 @@ class HomeFragment : Fragment() {
         //disini masukkan code tambahkan cart
     }
 
-    fun updateList(){ /*
-        val lm: LinearLayoutManager = LinearLayoutManager(activity)
-        var rv = v?.findViewById<RecyclerView>(R.id.playlistView)
-        rv?.let {
-            it.layoutManager = lm
-            it.setHasFixedSize(true)
-            it.adapter = PlaylistAdapter(playlists)
-        }*/
+    fun updateList() {
 
         val layout = LinearLayoutManager(activity)
         view?.findViewById<RecyclerView>(R.id.productsView)?.let {
             it.layoutManager = layout
             it.setHasFixedSize(true)
             //it.adapter = PlaylistAdapter(playlists, activity!!.applicationContext)
-            it.adapter = ProductAdapter(products)
+            it.adapter = ProductCardAdapter(products)
         }
     }
 
     companion object {
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(prod:ArrayList<Product>) =
+        fun newInstance() =
             HomeFragment().apply {
                 arguments = Bundle().apply {
 //                    putSerializable(ARR_PRODUCTS, prod as Serializable)

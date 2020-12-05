@@ -1,15 +1,21 @@
 package id.ac.ubaya.onlensop
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_product_detail.*
+import org.json.JSONObject
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 /**
  * A simple [Fragment] subclass.
@@ -17,16 +23,58 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    var carts: ArrayList<Cart> = ArrayList()
+    var v: View? = null
+
+    fun updateList() {
+
+        val layout = LinearLayoutManager(activity)
+        view?.findViewById<RecyclerView>(R.id.recyclerViewCarts)?.let {
+            it.layoutManager = layout
+            it.setHasFixedSize(true)
+            it.adapter = CartCardAdapter(carts)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        val q = Volley.newRequestQueue(activity)
+        val url = "http://ubaya.prototipe.net/nmp160418081/usercart.php?id=${Global.customer.id}"
+        val stringRequest = StringRequest(
+            Request.Method.GET,
+            url,
+            {
+                Log.d("apiresult", it)
+
+                val obj = JSONObject(it)
+                if (obj.getString("result") == "OK") {
+                    val data = obj.getJSONArray("data")
+
+                    for (i in 0 until data.length()) {
+                        val playObj = data.getJSONObject(i)
+
+                        with(playObj) {
+                            carts.add(
+                                Cart(
+                                    getString("name"),
+                                    getInt("price"),
+                                    getString("image"),
+                                    getInt("quantity")
+                                )
+                            )
+                        }
+                    }
+                    updateList()
+                    Log.d("apiresult", carts.toString())
+                }
+            },
+            {
+                Log.e("apiresult", it.toString())
+            }
+        )
+        q.add(stringRequest)
     }
 
     override fun onCreateView(
@@ -38,21 +86,10 @@ class CartFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             CartFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }

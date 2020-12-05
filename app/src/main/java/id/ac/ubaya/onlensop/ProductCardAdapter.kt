@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.product_card_layout.view.*
+import kotlinx.android.synthetic.main.home_card_layout.view.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.text.NumberFormat
 
 
-class ProductAdapter(val products: ArrayList<Product>) :
-    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductCardAdapter(val products: ArrayList<Product>) :
+    RecyclerView.Adapter<ProductCardAdapter.ProductViewHolder>() {
 
     companion object {
         val PRODUCT_ID = "produk"
@@ -25,7 +24,7 @@ class ProductAdapter(val products: ArrayList<Product>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        var view = inflater.inflate(R.layout.product_card_layout, parent, false)
+        var view = inflater.inflate(R.layout.home_card_layout, parent, false)
         //view.textNamaProduk.setText("Haha")
         return ProductViewHolder(view)
 
@@ -43,7 +42,7 @@ class ProductAdapter(val products: ArrayList<Product>) :
             Picasso.get().load(products.image).into(imageProduk)
             textHarga.text = df.format(products.price).toString()
             textNamaProduk.text = products.name.take(30) + "…"
-            textDescProd.text = products.desc.take(100) + "…"
+            textDescProd.text = products.desc.take(75) + "…"
 
             cardViewProduct.setOnClickListener {
                 val intent = Intent(context, ProductDetailActivity::class.java)
