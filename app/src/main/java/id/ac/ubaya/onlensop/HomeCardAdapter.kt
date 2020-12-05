@@ -2,19 +2,24 @@ package id.ac.ubaya.onlensop
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.home_card_layout.view.*
+import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
 
-class ProductCardAdapter(val products: ArrayList<Product>) :
-    RecyclerView.Adapter<ProductCardAdapter.ProductViewHolder>() {
+class HomeCardAdapter(val products: ArrayList<Product>) :
+    RecyclerView.Adapter<HomeCardAdapter.ProductViewHolder>() {
 
     companion object {
         val PRODUCT_ID = "produk"
@@ -41,7 +46,7 @@ class ProductCardAdapter(val products: ArrayList<Product>) :
         with(holder.view) {
             Picasso.get().load(products.image).into(imageProduk)
             textHarga.text = df.format(products.price).toString()
-            textNamaProduk.text = products.name.take(30) + "…"
+            textNamaProduk.text = products.name.take(15) + "…"
             textDescProd.text = products.desc.take(75) + "…"
 
             cardViewProduct.setOnClickListener {
@@ -50,9 +55,34 @@ class ProductCardAdapter(val products: ArrayList<Product>) :
                 context.startActivity(intent)
             }
 
-            // TODO: cart feature
             buttonAddToCart.setOnClickListener {
-                Toast.makeText(context, "Produk ditambahakan ke cart", Toast.LENGTH_SHORT).show()
+                val q = Volley.newRequestQueue(context)
+                val url =
+                    "http://ubaya.prototipe.net/nmp160418081/updateCart.php?" +
+                            "customers_id=${Global.customer.id}&" +
+                            "products_id=${products.id}&" +
+                            "quantity=1"
+                val stringRequest = StringRequest(
+                    Request.Method.GET,
+                    url,
+                    {
+                        Log.d("apiresult", it)
+
+                        val obj = JSONObject(it)
+                        if (obj.getString("result") == "OK") {
+                            val message = obj.getString("message")
+
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    {
+                        Log.e("apiresult", it.toString())
+                    }
+                )
+                q.add(stringRequest)
+
+                // TODO: refresh CartFragment (update)
+
             }
         }
 

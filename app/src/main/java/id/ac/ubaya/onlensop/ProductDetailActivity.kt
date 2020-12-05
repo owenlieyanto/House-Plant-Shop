@@ -34,7 +34,7 @@ class ProductDetailActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val product_id = intent.getIntExtra(ProductCardAdapter.PRODUCT_ID, 0)
+        val product_id = intent.getIntExtra(HomeCardAdapter.PRODUCT_ID, 0)
 
         val q = Volley.newRequestQueue(this)
         val url = "http://ubaya.prototipe.net/nmp160418081/detailproduct.php?id=$product_id"

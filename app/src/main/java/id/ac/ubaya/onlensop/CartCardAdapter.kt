@@ -33,7 +33,7 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
 
         with(holder.view) {
             textHarga.text = df.format(carts.price).toString()
-            textNamaProduk.text = carts.name.take(30) + "…"
+            textNamaProduk.text = carts.name.take(15) + "…"
             textJumlahCart.setText(carts.quantity.toString())
 
             // TODO: card cart di click

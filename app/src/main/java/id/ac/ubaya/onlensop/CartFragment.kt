@@ -17,6 +17,10 @@ import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
 /**
  * A simple [Fragment] subclass.
  * Use the [CartFragment.newInstance] factory method to
@@ -37,8 +41,8 @@ class CartFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    fun reloadPage() {
+        carts.clear()
 
         val q = Volley.newRequestQueue(activity)
         val url = "http://ubaya.prototipe.net/nmp160418081/usercart.php?id=${Global.customer.id}"
@@ -77,6 +81,18 @@ class CartFragment : Fragment() {
         q.add(stringRequest)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        reloadPage()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        reloadPage()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -84,6 +100,7 @@ class CartFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cart, container, false)
     }
+
 
     companion object {
         fun newInstance() =

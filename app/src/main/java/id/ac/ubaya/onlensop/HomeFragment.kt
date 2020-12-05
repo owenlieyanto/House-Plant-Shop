@@ -14,6 +14,10 @@ import com.android.volley.toolbox.Volley
 //import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONObject
 
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
 /**
  * A simple [Fragment] subclass.
  * Use the [HomeFragment.newInstance] factory method to
@@ -26,6 +30,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val q = Volley.newRequestQueue(activity)
         val url = "http://ubaya.prototipe.net/nmp160418081/homeproduct.php"
         val stringRequest = StringRequest(
@@ -64,14 +69,12 @@ class HomeFragment : Fragment() {
             }
         )
         q.add(stringRequest)
-        //products = arguments!!.getSerializable(ARR_PRODUCTS) as ArrayList<Product>
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //return inflater.inflate(R.layout.fragment_home, container, false)
         v = inflater.inflate(R.layout.fragment_home, container, false)
         return v
     }
@@ -89,7 +92,7 @@ class HomeFragment : Fragment() {
             it.layoutManager = layout
             it.setHasFixedSize(true)
             //it.adapter = PlaylistAdapter(playlists, activity!!.applicationContext)
-            it.adapter = ProductCardAdapter(products)
+            it.adapter = HomeCardAdapter(products)
         }
     }
 
