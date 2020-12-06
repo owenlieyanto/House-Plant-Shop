@@ -9,9 +9,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCarts"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="406dp"
+        android:layout_height="380dp"
         android:layout_marginTop="24dp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -32,30 +33,31 @@
         android:id="@+id/buttonCheckoutCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="32dp"
         android:text="Checkout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewCarts" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/asap"
         android:text="Total"
-        app:layout_constraintEnd_toStartOf="@+id/buttonCheckoutCart"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewCarts" />
+        app:layout_constraintBottom_toTopOf="@+id/textTotalCart"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCheckoutCart" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:fontFamily="@font/asap_medium"
         android:text="Rp."
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textTotalCart"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -64,9 +66,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:fontFamily="@font/asap_medium"
         android:text="1512"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonCheckoutCart"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCheckoutCart" />
 </androidx.constraintlayout.widget.ConstraintLayout>
