@@ -44,7 +44,12 @@ class CartFragment : Fragment() {
             Log.d("sub total: ", (carts[i].quantity*carts[i].price).toString())
         }
         totalCart = total
-        textTotalCart.setText(totalCart.toString())
+
+        val df = DecimalFormat("#,###")
+        df.roundingMode = RoundingMode.CEILING
+
+
+        textTotalCart.setText(df.format(totalCart).toString())
         Log.d("total: ", totalCart.toString())
     }
 

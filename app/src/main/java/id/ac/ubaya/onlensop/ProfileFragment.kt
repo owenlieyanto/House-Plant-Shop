@@ -44,7 +44,10 @@ class ProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        textViewProfile.text = "Ini user customer bernama ${Global.customer.nama}"
+        textViewProfile.text = "${Global.customer.nama}"
+        textInputProfileNama.setText("${Global.customer.nama}")
+        textInputProfilePassword.setText("${Global.customer.password}")
+        textInputProfilePasswordUlang.setText("${Global.customer.password}")
     }
 
     companion object {
