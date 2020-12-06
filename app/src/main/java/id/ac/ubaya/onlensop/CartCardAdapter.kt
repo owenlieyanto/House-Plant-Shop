@@ -16,6 +16,7 @@ import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
+
 class CartCardAdapter(val carts: ArrayList<Cart>) :
     RecyclerView.Adapter<CartCardAdapter.ProductViewHolder>() {
 
@@ -43,33 +44,42 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
             textJumlahCart.setText(carts.quantity.toString())
 
             buttonKurangCart.setOnClickListener {
-                val q2 = Volley.newRequestQueue(context)
-                val url2 =
-                    "http://ubaya.prototipe.net/nmp160418081/updateCart.php?" +
-                            "customers_id=${Global.customer.id}&" +
-                            "products_id=${carts.product_id}&" +
-                            "quantity=-1"
-                val stringRequest2 = StringRequest(
-                    Request.Method.GET,
-                    url2,
-                    {
-                        Log.d("apiresult", it)
+                if (textJumlahCart.text.toString().toInt() > 0)
+                {
+                    textJumlahCart.text = (textJumlahCart.text.toString().toInt()-1).toString()
+                    textHarga.text = df.format(carts.price * textJumlahCart.text.toString().toInt()).toString()
+                    val q2 = Volley.newRequestQueue(context)
+                    val url2 =
+                        "http://ubaya.prototipe.net/nmp160418081/updateCart.php?" +
+                                "customers_id=${Global.customer.id}&" +
+                                "products_id=${carts.product_id}&" +
+                                "quantity=-1"
+                    val stringRequest2 = StringRequest(
+                        Request.Method.GET,
+                        url2,
+                        {
+                            Log.d("apiresult", it)
 
-                        val obj = JSONObject(it)
-                        if (obj.getString("result") == "OK") {
-                            val message = obj.getString("message")
+                            val obj = JSONObject(it)
+                            if (obj.getString("result") == "OK") {
+                                val message = obj.getString("message")
 
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        {
+                            Log.e("apiresult", it.toString())
                         }
-                    },
-                    {
-                        Log.e("apiresult", it.toString())
-                    }
-                )
-                q2.add(stringRequest2)
+                    )
+                    q2.add(stringRequest2)
+                }
+                else
+                {
+                    Toast.makeText(context, "kuantitas barang tidak boleh kurang dari nol", Toast.LENGTH_SHORT).show()
+                }
+
 
                 // TODO: refresh fragment parent
-
             }
 
             buttonTambahCart.setOnClickListener {
@@ -97,9 +107,9 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
                     }
                 )
                 q2.add(stringRequest2)
-
+                textJumlahCart.text = (textJumlahCart.text.toString().toInt()+1).toString()
+                textHarga.text = df.format(carts.price * textJumlahCart.text.toString().toInt()).toString()
                 // TODO: refresh fragment parent
-
             }
 
             // TODO: card cart di click

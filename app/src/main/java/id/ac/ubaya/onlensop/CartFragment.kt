@@ -32,7 +32,6 @@ class CartFragment : Fragment() {
     var v: View? = null
 
     fun updateList() {
-
         val layout = LinearLayoutManager(activity)
         view?.findViewById<RecyclerView>(R.id.recyclerViewCarts)?.let {
             it.layoutManager = layout
