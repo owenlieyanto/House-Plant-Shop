@@ -56,6 +56,7 @@
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/asap_medium"
         android:text="Rp."
+        android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textTotalCart"
@@ -69,6 +70,7 @@
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/asap_medium"
         android:text="1512"
+        android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonCheckoutCart" />
