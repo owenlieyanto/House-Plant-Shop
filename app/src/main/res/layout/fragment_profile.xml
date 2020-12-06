@@ -17,14 +17,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Re-type Password"
+        android:hint="Re-type Password Baru"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputProfilePasswordUlang"
+            android:id="@+id/textInputUlangPasswordBaru"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -40,14 +40,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Password"
+        android:hint="Password Baru"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputProfilePassword"
+            android:id="@+id/textInputPasswordBaru"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewProfile" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonUpdateProfile"
         android:layout_width="217dp"
         android:layout_height="51dp"
         android:layout_marginTop="36dp"

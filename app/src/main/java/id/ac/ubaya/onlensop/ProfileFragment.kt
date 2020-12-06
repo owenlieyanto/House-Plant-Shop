@@ -2,12 +2,17 @@ package id.ac.ubaya.onlensop
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_profile.*
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,13 +46,69 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
+    fun updateProfileTexts() {
+        textViewProfile.text = Global.customer.nama
+        textInputProfileNama.setText(Global.customer.nama)
+        textInputPasswordBaru.setText(Global.customer.password)
+        textInputUlangPasswordBaru.setText(Global.customer.password)
+    }
+
     override fun onResume() {
         super.onResume()
 
-        textViewProfile.text = "${Global.customer.nama}"
-        textInputProfileNama.setText("${Global.customer.nama}")
-        textInputProfilePassword.setText("${Global.customer.password}")
-        textInputProfilePasswordUlang.setText("${Global.customer.password}")
+        buttonUpdateProfile.setOnClickListener {
+
+            if (textInputPasswordBaru.text.toString() == textInputUlangPasswordBaru.text.toString()) {
+                // TODO: pake api
+                val namaBaru = textInputProfileNama.text.toString()
+                val passwordBaru = textInputPasswordBaru.text.toString()
+
+                val q = Volley.newRequestQueue(context)
+                val url =
+                    "http://ubaya.prototipe.net/nmp160418081/updateProfile.php"
+                val stringRequest = object : StringRequest(
+                    Method.POST,
+                    url,
+                    {
+                        Log.d("apiresult", it)
+
+                        val obj = JSONObject(it)
+                        if (obj.getString("result") == "OK") {
+                            val message = obj.getString("message")
+
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+                            Global.customer.nama = namaBaru
+                            Global.customer.password = passwordBaru
+
+                            updateProfileTexts()
+                        }
+                    },
+                    {
+                        Log.e("apiresult", it.toString())
+                    }
+                ) {
+                    override fun getParams(): MutableMap<String, String> {
+                        val params = HashMap<String, String>()
+
+                        params["id"] = Global.customer.id.toString()
+                        params["namaBaru"] = namaBaru
+                        params["passwordBaru"] = passwordBaru
+
+                        return params
+                    }
+                }
+                q.add(stringRequest)
+            } else {
+                Toast.makeText(
+                    context,
+                    "Coba ulangi passwordnya. Masih belum sama tuh.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        updateProfileTexts()
     }
 
     companion object {
