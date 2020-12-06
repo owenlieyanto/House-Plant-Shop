@@ -13,9 +13,11 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import kotlinx.android.synthetic.main.fragment_cart.*
 import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import kotlin.math.log
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -30,6 +32,21 @@ class CartFragment : Fragment() {
 
     var carts: ArrayList<Cart> = ArrayList()
     var v: View? = null
+    var totalCart = 0;
+
+    fun countTotal()
+    {
+        var total = 0
+        val itemCount = carts.size-1;
+        for (i in 0..itemCount)
+        {
+            total+= carts[i].quantity*carts[i].price
+            Log.d("sub total: ", (carts[i].quantity*carts[i].price).toString())
+        }
+        totalCart = total
+        textTotalCart.setText(totalCart.toString())
+        Log.d("total: ", totalCart.toString())
+    }
 
     fun updateList() {
         val layout = LinearLayoutManager(activity)
@@ -89,7 +106,7 @@ class CartFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
+        countTotal()
         reloadPage()
     }
 

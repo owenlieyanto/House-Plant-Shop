@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -12,6 +13,8 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_card_layout.view.*
+import kotlinx.android.synthetic.main.fragment_cart.view.*
+
 import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -109,19 +112,14 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
                 q2.add(stringRequest2)
                 textJumlahCart.text = (textJumlahCart.text.toString().toInt()+1).toString()
                 textHarga.text = df.format(carts.price * textJumlahCart.text.toString().toInt()).toString()
-                // TODO: refresh fragment parent
-            }
 
-            // TODO: card cart di click
-//            cardViewProduct.setOnClickListener {
-//                val intent = Intent(context, ProductDetailActivity::class.java)
-////                intent.putExtra(CartCardAdapter.PRODUCT_ID, products.id)
-//                context.startActivity(intent)
-//            }
+//                 TODO: refresh fragment parent
+            }
         }
 
         val img = "http://ubaya.prototipe.net/nmp160418081/image/" + carts.image
         Picasso.get().load(img).into(holder.view.imageProduk)
+
     }
 
     override fun getItemCount() = carts.size
