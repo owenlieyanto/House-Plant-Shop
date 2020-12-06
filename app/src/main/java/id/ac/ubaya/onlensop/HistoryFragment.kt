@@ -1,10 +1,22 @@
 package id.ac.ubaya.onlensop
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.fragment_history.*
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,12 +32,79 @@ class HistoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var histories: ArrayList<History> = ArrayList()
+    var v: View? = null
+
+    fun updateList() {
+        val layout = LinearLayoutManager(activity)
+        view?.findViewById<RecyclerView>(R.id.recyclerViewHistory)?.let {
+            it.layoutManager = layout
+            it.setHasFixedSize(true)
+            it.adapter = HistoryCardAdapter(histories)
+        }
+    }
+
+    fun reloadPage() {
+        histories.clear()
+        val q = Volley.newRequestQueue(activity)
+        val id = (Global.customer.id).toString()
+        val url = "http://ubaya.prototipe.net/nmp160418081/orderhistory.php?id=${Global.customer.id}"
+        Log.d("url", url )
+        val stringRequest = StringRequest(
+            Request.Method.GET,
+            url,
+            {
+                Log.d("apiresult", it)
+
+                val obj = JSONObject(it)
+                if (obj.getString("result") == "OK") {
+                    val data = obj.getJSONArray("data")
+
+                    for (i in 0 until data.length()) {
+                        val playObj = data.getJSONObject(i)
+
+                        with(playObj) {
+                            histories.add(
+                                History(
+                                    getInt("id"),
+                                    getInt("total"),
+                                    getString("orderDate"),
+                                    getInt("order_count"),
+                                    getInt("order_sum")
+                                )
+                            )
+                        }
+                    }
+                    updateList()
+                    Log.d("apiresult", histories.toString())
+                }
+                else if (obj.getString("result") == "KOSONG")
+                {
+
+                }
+            },
+            {
+                Log.e("apiresult", it.toString())
+            }
+        )
+        q.add(stringRequest)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+//        reloadPage()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        reloadPage()
+        if (histories.count() == 0) {
+            textHistoryInfo.text = "history kosong."
+        }
+        else
+        {
+            textHistoryInfo.text = ""
         }
     }
 
@@ -38,14 +117,7 @@ class HistoryFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HistoryFragment.
-         */
+
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
