@@ -14,6 +14,8 @@ import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_home.*
 //import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONObject
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -88,8 +90,9 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        textHomeBalance.text = Global.customer.wallet.toString()
+        val df = DecimalFormat("#,###")
+        df.roundingMode = RoundingMode.CEILING
+        textHomeBalance.text = df.format(Global.customer.wallet).toString()
     }
 
     private fun updateList() {

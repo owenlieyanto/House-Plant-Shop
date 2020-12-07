@@ -13,6 +13,8 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,12 +49,15 @@ class ProfileFragment : Fragment() {
     }
 
     fun updateProfileTexts() {
+
         textViewProfile.text = Global.customer.nama
         textInputProfileNama.setText(Global.customer.nama)
         textInputPasswordBaru.setText(Global.customer.password)
         textInputUlangPasswordBaru.setText(Global.customer.password)
 
-        textProfileBalance.text = Global.customer.wallet.toString()
+        val df = DecimalFormat("#,###")
+        df.roundingMode = RoundingMode.CEILING
+        textProfileBalance.text = df.format(Global.customer.wallet).toString()
     }
 
     override fun onResume() {
