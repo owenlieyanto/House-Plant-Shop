@@ -54,7 +54,7 @@ class ProfileFragment : Fragment() {
         textInputProfileNama.setText(Global.customer.nama)
         textInputPasswordBaru.setText(Global.customer.password)
         textInputUlangPasswordBaru.setText(Global.customer.password)
-
+        textInputProfileBalance.setText("")
         val df = DecimalFormat("#,###")
         df.roundingMode = RoundingMode.CEILING
         textProfileBalance.text = df.format(Global.customer.wallet).toString()

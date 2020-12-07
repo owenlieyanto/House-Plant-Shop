@@ -99,13 +99,7 @@ class HistoryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         reloadPage()
-        if (histories.count() == 0) {
-            textHistoryInfo.text = "history kosong."
-        }
-        else
-        {
-            textHistoryInfo.text = ""
-        }
+
     }
 
     override fun onCreateView(

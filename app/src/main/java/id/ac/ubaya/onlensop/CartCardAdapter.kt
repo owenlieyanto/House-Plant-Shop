@@ -116,26 +116,11 @@ class CartCardAdapter(val carts: ArrayList<Cart>, val fragment: CartFragment) :
                 textJumlahCart.text = (textJumlahCart.text.toString().toInt() + 1).toString()
                 textHarga.text =
                     df.format(carts.price * textJumlahCart.text.toString().toInt()).toString()
-
-
             }
-            /*
-            buttonCheckoutCart.setOnClickListener(){
-                val builder = AlertDialog.Builder(this.context)
-                builder.setTitle("Alert")
-                builder.setMessage("Sure want to Checkout?")
-                builder.setPositiveButton("OK",{ dialogInterface: DialogInterface, i: Int ->
-                    Log.d("test","masok")
-                })
-                builder.setNegativeButton("No",{ dialogInterface: DialogInterface, i: Int -> })
-                builder.show()
-            }*/
         }
 
         val img = "http://ubaya.prototipe.net/nmp160418081/image/" + carts.image
         Picasso.get().load(img).into(holder.view.imageProduk)
-
     }
-
     override fun getItemCount() = carts.size
 }

@@ -34,7 +34,7 @@ class HistoryCardAdapter(var histories: ArrayList<History>) :
         var histories = histories[position]
         with(holder.view) {
             textHistoryCountQuantity.text = histories.order_count.toString()
-            textHistoryOrderId.text = histories.id.toString()
+            textHistoryOrderId.text = "#"+histories.id.toString()
             textHistoryDate.text = histories.order_date.toString()
             textHistorySumQuantity.text = histories.order_sum.toString()
             textHistoryPrice.text = "Rp. "+df.format(histories.total).toString()
