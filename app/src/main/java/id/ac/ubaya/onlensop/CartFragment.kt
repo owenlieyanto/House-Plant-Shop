@@ -1,5 +1,7 @@
 package id.ac.ubaya.onlensop
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -105,11 +108,11 @@ class CartFragment : Fragment() {
         buttonCheckoutCart.setOnClickListener {
             if (carts.size != 0) {
                 if (totalCart > Global.customer.wallet) {
-                    Toast.makeText(
-                        context,
-                        "Saldo anda tidak cukup untuk memesan ini, silahkan kurangi isi cart atau lakukan top-up saldo.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+                    val builder = AlertDialog.Builder(activity!!)
+                    builder.setMessage("Saldo anda tidak cukup untuk memesan ini, silahkan kurangi isi cart atau lakukan top-up saldo.")
+                    builder.setPositiveButton("Anjay") { dialogInterface: DialogInterface, i: Int -> }
+                    builder.show()
                 } else {
                     val q = Volley.newRequestQueue(activity)
                     val url =
@@ -124,11 +127,11 @@ class CartFragment : Fragment() {
                             if (obj.getString("result") == "OK") {
                                 carts.clear()
                                 updateList()
-                                Toast.makeText(
-                                    context,
-                                    "Selamat! Anda berhasil melakukan pemesanan!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+
+                                val builder = AlertDialog.Builder(activity!!)
+                                builder.setMessage("Selamat! Anda berhasil melakukan pemesanan!")
+                                builder.setPositiveButton("Mantap") { dialogInterface: DialogInterface, i: Int -> }
+                                builder.show()
 
                                 Global.customer.wallet -= totalCart
                                 reloadPage()
@@ -142,7 +145,10 @@ class CartFragment : Fragment() {
 
                 }
             } else {
-                Toast.makeText(context, "Anda belum memilih barang", Toast.LENGTH_SHORT).show()
+                val builder = AlertDialog.Builder(activity!!)
+                builder.setMessage("Anda belum memilih barang.")
+                builder.setPositiveButton("Saya paham.") { dialogInterface: DialogInterface, i: Int -> }
+                builder.show()
             }
         }
     }
