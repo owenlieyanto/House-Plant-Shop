@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -107,12 +108,48 @@ class CartFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         reloadPage()
+
+
+
     }
 
     override fun onResume() {
         super.onResume()
         countTotal()
         reloadPage()
+        buttonCheckoutCart.setOnClickListener {
+            if(carts.size != 0){
+                if (totalCart > Global.customer.wallet ) {
+                    Toast.makeText(context, "Saldo anda tidak cukup untuk memesan ini, silahkan kurangi isi cart atau lakukan top-up saldo.", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    val q = Volley.newRequestQueue(activity)
+                    val url = "http://ubaya.prototipe.net/nmp160418081/checkout.php?id=${Global.customer.id}&total=$totalCart&wallet=${Global.customer.wallet}"
+                    val stringRequest = StringRequest(
+                        Request.Method.GET,
+                        url,
+                        {
+                            Log.d("url checkout", url)
+
+                            val obj = JSONObject(it)
+                            if (obj.getString("result") == "OK") {
+                                carts.clear()
+                                updateList()
+                                Toast.makeText(context, "Selamat! Anda berhasil melakukan pemesanan!", Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        {
+                            Log.e("apiresult", it.toString())
+                        }
+                    )
+                    q.add(stringRequest)
+                }
+            }
+            else {
+                Toast.makeText(context, "Anda belum memilih barang", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateView(
