@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.fragment_home.*
 //import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONObject
 
@@ -85,7 +86,13 @@ class HomeFragment : Fragment() {
         //disini masukkan code tambahkan cart
     }
 
-    fun updateList() {
+    override fun onResume() {
+        super.onResume()
+
+        textHomeBalance.text = Global.customer.wallet.toString()
+    }
+
+    private fun updateList() {
 
         val layout = LinearLayoutManager(activity)
         view?.findViewById<RecyclerView>(R.id.productsView)?.let {

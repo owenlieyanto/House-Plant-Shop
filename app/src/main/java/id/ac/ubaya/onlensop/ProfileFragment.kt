@@ -51,10 +51,14 @@ class ProfileFragment : Fragment() {
         textInputProfileNama.setText(Global.customer.nama)
         textInputPasswordBaru.setText(Global.customer.password)
         textInputUlangPasswordBaru.setText(Global.customer.password)
+
+        textProfileBalance.text = Global.customer.wallet.toString()
     }
 
     override fun onResume() {
         super.onResume()
+
+        updateProfileTexts()
 
         buttonUpdateProfile.setOnClickListener {
 
@@ -108,7 +112,50 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        updateProfileTexts()
+        buttonProfileTopup.setOnClickListener {
+            var jumlahTopup = textInputProfileBalance?.text.toString().toInt()
+
+            if (jumlahTopup > 0) {
+                val q = Volley.newRequestQueue(context)
+                val url =
+                    "http://ubaya.prototipe.net/nmp160418081/topUp.php"
+                val stringRequest = object : StringRequest(
+                    Method.POST,
+                    url,
+                    {
+                        Log.d("apiresult", it)
+
+                        val obj = JSONObject(it)
+
+                        if (obj.getString("result") == "OK") {
+                            var message = obj.getString("message")
+
+                            Global.customer.wallet += jumlahTopup
+
+                            updateProfileTexts()
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+                        }
+
+                    },
+                    {
+                        Log.e("apiresult", it.toString())
+                    }
+                ) {
+                    override fun getParams(): MutableMap<String, String> {
+                        val params = HashMap<String, String>()
+
+                        params["id"] = Global.customer.id.toString()
+                        params["jumlahTopup"] = jumlahTopup.toString()
+
+                        return params
+                    }
+                }
+                q.add(stringRequest)
+            }else{
+                Toast.makeText(context, "Nominal harus diisi lebih dari 0", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     companion object {

@@ -49,7 +49,7 @@ class CartFragment : Fragment() {
         df.roundingMode = RoundingMode.CEILING
 
 
-        textTotalCart.setText(df.format(totalCart).toString())
+        textTotalCart.text = df.format(totalCart).toString()
         Log.d("total: ", totalCart.toString())
     }
 
