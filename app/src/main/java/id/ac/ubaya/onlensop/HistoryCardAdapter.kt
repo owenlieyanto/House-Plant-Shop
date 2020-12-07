@@ -12,6 +12,8 @@ import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.cart_card_layout.view.*
 import kotlinx.android.synthetic.main.history_card_layout.view.*
 import org.json.JSONObject
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class HistoryCardAdapter(var histories: ArrayList<History>) :
     RecyclerView.Adapter<HistoryCardAdapter.HistoryViewHolder>(){
@@ -26,13 +28,16 @@ class HistoryCardAdapter(var histories: ArrayList<History>) :
         return HistoryCardAdapter.HistoryViewHolder(view)
     }
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
+        val df = DecimalFormat("#,###")
+        df.roundingMode = RoundingMode.CEILING
+
         var histories = histories[position]
         with(holder.view) {
             textHistoryCountQuantity.text = histories.order_count.toString()
             textHistoryOrderId.text = histories.id.toString()
             textHistoryDate.text = histories.order_date.toString()
             textHistorySumQuantity.text = histories.order_sum.toString()
-            textHistoryPrice.text = histories.total.toString()
+            textHistoryPrice.text = "Rp. "+df.format(histories.total).toString()
         }
     }
     override fun getItemCount() = histories.size

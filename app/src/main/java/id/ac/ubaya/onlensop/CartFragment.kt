@@ -17,6 +17,8 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_cart.*
 import org.json.JSONObject
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -40,7 +42,9 @@ class CartFragment : Fragment() {
             Log.d("subtotal", "subtotal cart $cart = ${(cart.quantity * cart.price)}")
         }
         Log.d("total", totalCart.toString())
-        textTotalCart.text = totalCart.toString()
+        val df = DecimalFormat("#,###")
+        df.roundingMode = RoundingMode.CEILING
+        textTotalCart.text = df.format(totalCart).toString()
     }
 
     fun updateList() {
