@@ -1,20 +1,37 @@
 package id.ac.ubaya.onlensop
 
+import android.content.ClipData
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
     val fragments: ArrayList<Fragment> = ArrayList()
 
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.itemLogout -> {
+                val intent = Intent(this, LoginActivity::class.java)
+                var customer = Customer(0, "", "", "", 0)
+                Global.customer = customer
+                startActivity(intent)
+                finish()
+            }
+        }
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.showOverflowMenu()
 
-        //val tombolKeluar = toolbar.findViewById<>(R.id.itemLogout)
+//        val tombolKeluar = toolbar.findViewById<>(R.id.itemLogout)
 
         with(fragments) {
             add(HomeFragment())
@@ -60,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu,menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 }

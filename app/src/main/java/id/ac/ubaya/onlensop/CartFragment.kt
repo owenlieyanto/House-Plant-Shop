@@ -1,5 +1,7 @@
 package id.ac.ubaya.onlensop
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,18 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.fragment_cart.*
 import org.json.JSONObject
-import java.math.RoundingMode
-import java.text.DecimalFormat
-import kotlin.math.log
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -35,23 +33,14 @@ class CartFragment : Fragment() {
     var v: View? = null
     var totalCart = 0;
 
-    fun countTotal()
-    {
-        var total = 0
-        val itemCount = carts.size-1;
-        for (i in 0..itemCount)
-        {
-            total+= carts[i].quantity*carts[i].price
-            Log.d("sub total: ", (carts[i].quantity*carts[i].price).toString())
+    fun countTotal2() {
+        totalCart = 0
+        for (cart in carts) {
+            totalCart += (cart.quantity * cart.price)
+            Log.d("subtotal", "subtotal cart $cart = ${(cart.quantity * cart.price)}")
         }
-        totalCart = total
-
-        val df = DecimalFormat("#,###")
-        df.roundingMode = RoundingMode.CEILING
-
-
-        textTotalCart.text = df.format(totalCart).toString()
-        Log.d("total: ", totalCart.toString())
+        Log.d("total", totalCart.toString())
+        textTotalCart.text = totalCart.toString()
     }
 
     fun updateList() {
@@ -59,7 +48,7 @@ class CartFragment : Fragment() {
         view?.findViewById<RecyclerView>(R.id.recyclerViewCarts)?.let {
             it.layoutManager = layout
             it.setHasFixedSize(true)
-            it.adapter = CartCardAdapter(carts)
+            it.adapter = CartCardAdapter(carts, this)
         }
     }
 
@@ -95,7 +84,9 @@ class CartFragment : Fragment() {
                     }
                     updateList()
                     Log.d("apiresult", carts.toString())
+
                 }
+                countTotal2()
             },
             {
                 Log.e("apiresult", it.toString())
@@ -107,25 +98,25 @@ class CartFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        reloadPage()
-
-
-
     }
 
     override fun onResume() {
         super.onResume()
-        countTotal()
+
         reloadPage()
+
         buttonCheckoutCart.setOnClickListener {
-            if(carts.size != 0){
-                if (totalCart > Global.customer.wallet ) {
-                    Toast.makeText(context, "Saldo anda tidak cukup untuk memesan ini, silahkan kurangi isi cart atau lakukan top-up saldo.", Toast.LENGTH_SHORT).show()
-                }
-                else
-                {
+            if (carts.size != 0) {
+                if (totalCart > Global.customer.wallet) {
+
+                    val builder = AlertDialog.Builder(activity!!)
+                    builder.setMessage("Saldo anda tidak cukup untuk memesan ini, silahkan kurangi isi cart atau lakukan top-up saldo.")
+                    builder.setPositiveButton("Anjay") { dialogInterface: DialogInterface, i: Int -> }
+                    builder.show()
+                } else {
                     val q = Volley.newRequestQueue(activity)
-                    val url = "http://ubaya.prototipe.net/nmp160418081/checkout.php?id=${Global.customer.id}&total=$totalCart&wallet=${Global.customer.wallet}"
+                    val url =
+                        "http://ubaya.prototipe.net/nmp160418081/checkout.php?id=${Global.customer.id}&total=$totalCart&wallet=${Global.customer.wallet}"
                     val stringRequest = StringRequest(
                         Request.Method.GET,
                         url,
@@ -136,7 +127,14 @@ class CartFragment : Fragment() {
                             if (obj.getString("result") == "OK") {
                                 carts.clear()
                                 updateList()
-                                Toast.makeText(context, "Selamat! Anda berhasil melakukan pemesanan!", Toast.LENGTH_SHORT).show()
+
+                                val builder = AlertDialog.Builder(activity!!)
+                                builder.setMessage("Selamat! Anda berhasil melakukan pemesanan!")
+                                builder.setPositiveButton("Mantap") { dialogInterface: DialogInterface, i: Int -> }
+                                builder.show()
+
+                                Global.customer.wallet -= totalCart
+                                reloadPage()
                             }
                         },
                         {
@@ -144,10 +142,13 @@ class CartFragment : Fragment() {
                         }
                     )
                     q.add(stringRequest)
+
                 }
-            }
-            else {
-                Toast.makeText(context, "Anda belum memilih barang", Toast.LENGTH_SHORT).show()
+            } else {
+                val builder = AlertDialog.Builder(activity!!)
+                builder.setMessage("Anda belum memilih barang.")
+                builder.setPositiveButton("Saya paham.") { dialogInterface: DialogInterface, i: Int -> }
+                builder.show()
             }
         }
     }
