@@ -2,6 +2,8 @@ package id.ac.ubaya.onlensop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_main.*
@@ -11,9 +13,18 @@ class MainActivity : AppCompatActivity() {
 
     val fragments: ArrayList<Fragment> = ArrayList()
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        setSupportActionBar(toolbar)
+        toolbar.showOverflowMenu()
+
+        //val tombolKeluar = toolbar.findViewById<>(R.id.itemLogout)
 
         with(fragments) {
             add(HomeFragment())
@@ -46,6 +57,11 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
 

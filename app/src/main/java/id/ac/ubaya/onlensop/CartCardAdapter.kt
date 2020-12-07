@@ -1,6 +1,8 @@
 package id.ac.ubaya.onlensop
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -115,10 +117,23 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
 
 //                 TODO: refresh fragment parent
             }
+            /*
+            buttonCheckoutCart.setOnClickListener(){
+                val builder = AlertDialog.Builder(this.context)
+                builder.setTitle("Alert")
+                builder.setMessage("Sure want to Checkout?")
+                builder.setPositiveButton("OK",{ dialogInterface: DialogInterface, i: Int ->
+                    Log.d("test","masok")
+                })
+                builder.setNegativeButton("No",{ dialogInterface: DialogInterface, i: Int -> })
+                builder.show()
+            }*/
         }
 
         val img = "http://ubaya.prototipe.net/nmp160418081/image/" + carts.image
         Picasso.get().load(img).into(holder.view.imageProduk)
+
+
 
     }
 
