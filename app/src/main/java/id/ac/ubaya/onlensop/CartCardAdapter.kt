@@ -1,13 +1,10 @@
 package id.ac.ubaya.onlensop
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -15,14 +12,13 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_card_layout.view.*
-import kotlinx.android.synthetic.main.fragment_cart.view.*
 
 import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
 
-class CartCardAdapter(val carts: ArrayList<Cart>) :
+class CartCardAdapter(val carts: ArrayList<Cart>, val fragment: CartFragment) :
     RecyclerView.Adapter<CartCardAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(val view: View) : RecyclerView.ViewHolder(view)
@@ -49,10 +45,10 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
             textJumlahCart.setText(carts.quantity.toString())
 
             buttonKurangCart.setOnClickListener {
-                if (textJumlahCart.text.toString().toInt() > 0)
-                {
-                    textJumlahCart.text = (textJumlahCart.text.toString().toInt()-1).toString()
-                    textHarga.text = df.format(carts.price * textJumlahCart.text.toString().toInt()).toString()
+                if (textJumlahCart.text.toString().toInt() > 0) {
+                    textJumlahCart.text = (textJumlahCart.text.toString().toInt() - 1).toString()
+                    textHarga.text =
+                        df.format(carts.price * textJumlahCart.text.toString().toInt()).toString()
                     val q2 = Volley.newRequestQueue(context)
                     val url2 =
                         "http://ubaya.prototipe.net/nmp160418081/updateCart.php?" +
@@ -71,16 +67,20 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
 
                                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                             }
+
+                            fragment.onResume()
                         },
                         {
                             Log.e("apiresult", it.toString())
                         }
                     )
                     q2.add(stringRequest2)
-                }
-                else
-                {
-                    Toast.makeText(context, "kuantitas barang tidak boleh kurang dari nol", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        "kuantitas barang tidak boleh kurang dari nol",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
 
@@ -106,16 +106,18 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
 
                             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                         }
+                        fragment.onResume()
                     },
                     {
                         Log.e("apiresult", it.toString())
                     }
                 )
                 q2.add(stringRequest2)
-                textJumlahCart.text = (textJumlahCart.text.toString().toInt()+1).toString()
-                textHarga.text = df.format(carts.price * textJumlahCart.text.toString().toInt()).toString()
+                textJumlahCart.text = (textJumlahCart.text.toString().toInt() + 1).toString()
+                textHarga.text =
+                    df.format(carts.price * textJumlahCart.text.toString().toInt()).toString()
 
-//                 TODO: refresh fragment parent
+
             }
             /*
             buttonCheckoutCart.setOnClickListener(){
@@ -132,8 +134,6 @@ class CartCardAdapter(val carts: ArrayList<Cart>) :
 
         val img = "http://ubaya.prototipe.net/nmp160418081/image/" + carts.image
         Picasso.get().load(img).into(holder.view.imageProduk)
-
-
 
     }
 
