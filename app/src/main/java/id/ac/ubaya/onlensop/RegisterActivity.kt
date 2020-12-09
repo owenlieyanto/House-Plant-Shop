@@ -35,9 +35,49 @@ class RegisterActivity : AppCompatActivity() {
                             Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show()
 
                             if (obj.getString("result") == "OK") {
-                                val intent = Intent(this, LoginActivity::class.java)
-                                startActivity(intent)
-                                finish()
+
+                                // Langsung arahkan ke home
+                                val q2 = Volley.newRequestQueue(this)
+                                val url2 = "http://ubaya.prototipe.net/nmp160418081/login.php"
+                                val stringRequest2 = object : StringRequest(
+                                    Request.Method.POST, url2,
+                                    {
+                                        Log.d("apiresult", it)
+                                        val obj2 = JSONObject(it)
+
+                                        if (obj2.getString("result") == "OK") {
+                                            val data = obj2.getJSONArray("data")
+
+                                            val idLogin = data.getJSONObject(0).getInt("id")
+                                            val emailLogin = data.getJSONObject(0).getString("email")
+                                            val namaLogin = data.getJSONObject(0).getString("nama")
+                                            val passwordLogin =
+                                                data.getJSONObject(0).getString("password")
+                                            val wallet = data.getJSONObject(0).getString("wallet")
+
+                                            val customer =
+                                                Customer(idLogin, emailLogin, namaLogin, passwordLogin, wallet.toInt())
+
+                                            val intent = Intent(this, MainActivity::class.java)
+                                            Global.customer = customer
+                                            startActivity(intent)
+                                            finish()
+                                        }
+                                    },
+                                    {
+                                        Log.e("apiresult", it.message.toString())
+                                    }
+                                ) {
+                                    override fun getParams(): MutableMap<String, String> {
+                                        val params = HashMap<String, String>()
+                                        params["email"] = email
+                                        params["password"] = password
+
+                                        return params
+                                    }
+                                }
+                                q2.add(stringRequest2)
+
                             }
                         },
                         {
